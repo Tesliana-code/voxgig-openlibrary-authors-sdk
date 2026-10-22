@@ -1,0 +1,94 @@
+openapi: 3.0.3
+info:
+  title: Open Library Authors API
+  version: 0.1.0
+  description: >-
+    Minimal independently curated OpenAPI description of Open Library's public
+    Authors endpoints. Based on official documentation, not supplied by Open Library.
+servers:
+  - url: https://openlibrary.org
+paths:
+  /search/authors.json:
+    get:
+      operationId: searchAuthors
+      summary: Search authors by name
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Matching authors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  numFound: { type: integer }
+                  start: { type: integer }
+                  docs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key: { type: string }
+                        name: { type: string }
+                        work_count: { type: integer }
+                        top_work: { type: string }
+  /authors/{authorId}.json:
+    get:
+      operationId: getAuthor
+      summary: Get an author's metadata by Open Library author ID
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Author metadata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key: { type: string }
+                  name: { type: string }
+                  birth_date: { type: string }
+                  bio:
+                    description: May be a string or object; intentionally not overtyped.
+  /authors/{authorId}/works.json:
+    get:
+      operationId: listAuthorWorks
+      summary: List an author's works
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1 }
+        - name: offset
+          in: query
+          schema: { type: integer, minimum: 0 }
+      responses:
+        '200':
+          description: Works for the author
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  size: { type: integer }
+                  links:
+                    type: object
+                    additionalProperties: true
+                  entries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key: { type: string }
+                        title: { type: string }
