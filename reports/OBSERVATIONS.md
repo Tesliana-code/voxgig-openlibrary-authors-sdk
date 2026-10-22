@@ -1,6 +1,6 @@
 # Voxgig SDK generator — observations
 
-**Status:** Not executed. Complete immediately after the time-boxed exercise.
+**Status:** SDK generation not executed. Initial environment preflight attempted on 22 October 2026; npm registry DNS was unavailable in the execution environment.
 
 ## Scope
 
@@ -13,10 +13,10 @@
 
 ## Steps and outcome
 
-1. Scaffold: [command, result, error if any]
-2. Generation: [command, result, error if any]
-3. Build/test: [command, result, error if any]
-4. Live API smoke test (optional): [result or not performed]
+1. Preflight: Node.js v22.16.0, npm 10.9.2 available. `npm view @voxgig/create-sdkgen version --fetch-retries=0 --fetch-timeout=8000` failed with `EAI_AGAIN getaddrinfo registry.npmjs.org`. This is an environment/network limitation; no conclusion about Voxgig reliability can be drawn.
+2. Scaffold / generation: not executed because the tool could not be fetched from npm.
+3. Build/test: not executed; no generated SDK yet.
+4. Live API smoke test: not performed.
 
 ## Developer experience
 
@@ -27,7 +27,7 @@
 
 ## Recommendations
 
-- [specific actionable improvement backed by observation]
+- No product recommendation yet: the preflight failure concerns external npm DNS reachability, not observed behavior of the Voxgig generator.
 
 ## Limitations
 
