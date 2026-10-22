@@ -1,35 +1,47 @@
-# Voxgig SDK generator — observations
+# Voxgig SDK Generator — Developer Experience Report
 
-**Status:** SDK generation not executed. Initial environment preflight attempted on 22 October 2026; npm registry DNS was unavailable in the execution environment.
+API: Open Library Authors API
+Target: TypeScript
+Environment: WSL, Node.js 20.19.4
+Human work: Time-boxed exercise with AI assistance
 
-## Scope
+## Results
 
-- API: Open Library Authors API (three read-only endpoints)
-- SDK target: TypeScript
-- Human work duration: [record actual minutes, max 30]
-- Voxgig tool and version: [record]
-- Node and OS: [record]
-- AI assistance: AI helped select a documented API, prepare a minimal OpenAPI contract, and create this repository scaffold. Human reviewer should check every command, generated artifact, and claim.
+- SDK generation: PASS
+- TypeScript build: PASS
+- Tests: 219 passed, 1 failed, 11 skipped
+- Generated SDK dependencies: 0 reported vulnerabilities
+- Generator toolchain: 3 reported vulnerabilities (2 low, 1 high)
 
-## Steps and outcome
+## Issues Observed
 
-1. Preflight: Node.js v22.16.0, npm 10.9.2 available. `npm view @voxgig/create-sdkgen version --fetch-retries=0 --fetch-timeout=8000` failed with `EAI_AGAIN getaddrinfo registry.npmjs.org`. This is an environment/network limitation; no conclusion about Voxgig reliability can be drawn.
-2. Scaffold / generation: not executed because the tool could not be fetched from npm.
-3. Build/test: not executed; no generated SDK yet.
-4. Live API smoke test: not performed.
+1. Node.js compatibility:
+   The generated SDK requires Node >=22.13.
+   Under Node 20, the default test runner could not
+   resolve the test file glob. Explicitly passing the
+   compiled test files allowed the tests to execute.
 
-## Developer experience
-
-- Documentation / onboarding: [observations]
-- Semantic model quality: [observations]
-- SDK ergonomics: [observations]
-- Reproducibility / regeneration: [observations or not tested]
+2. Generated test failure:
+   direct-load-author_id failed because result.ok
+   was false rather than true.
+   Root cause was not established within the time-box.
+   Node 20 is not a supported runtime.
 
 ## Recommendations
 
-- No product recommendation yet: the preflight failure concerns external npm DNS reachability, not observed behavior of the Voxgig generator.
+- Check Node version earlier and provide a clear warning.
+- Improve test runner compatibility diagnostics.
+- Include more actionable information when generated
+  operation tests fail.
+
+## AI Assistance
+
+AI assisted with the OpenAPI definition, generator
+instructions, diagnosis, and report preparation.
+The generated SDK was compiled and tested locally.
+The failing test was not manually patched.
 
 ## Limitations
 
-- The supplied OpenAPI file is a hand-curated subset of a much larger API.
-- This report does not claim SDK generation worked until it is actually executed.
+The OpenAPI contract covers three read-only endpoints.
+No live API smoke test was performed.
